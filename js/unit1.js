@@ -107,11 +107,13 @@ function calculateAnnuity() {
     displayResult(`${label}: ${toCurrency(res)}`);
 }
 
-// FIXED: This now shows the container correctly
+// THE FIX: This function now correctly reveals the parent container
 function displayResult(msg) {
     const container = document.getElementById('result-box');
     const text = document.getElementById('main-result');
-    container.style.display = 'block';
-    text.innerText = msg;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (container && text) {
+        container.style.display = 'block';
+        text.innerText = msg;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
