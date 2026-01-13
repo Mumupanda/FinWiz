@@ -66,7 +66,6 @@ function calculateGrowingAnnuity() {
     const i = rate / freq;
     const n = years * freq;
     
-    // t1 is the first payment discounted one period
     const t1 = pmt * Math.pow((1 + i), -1);
     
     let pv = 0;
@@ -108,8 +107,11 @@ function calculateAnnuity() {
     displayResult(`${label}: ${toCurrency(res)}`);
 }
 
+// FIXED: This now shows the container correctly
 function displayResult(msg) {
-    const box = document.getElementById('main-result');
-    box.style.display = 'block';
-    box.innerText = msg;
+    const container = document.getElementById('result-box');
+    const text = document.getElementById('main-result');
+    container.style.display = 'block';
+    text.innerText = msg;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
