@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit 4: Market Mechanics & Indices</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #2563eb; text-decoration: none; font-weight: bold; }
+        .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2 { color: #2563eb; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        label { font-size: 0.9em; font-weight: bold; color: #555; margin-top: 10px; display: block; }
+        input, select { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #d1d5db; border-radius: 4px; box-sizing: border-box; }
+        button { background: #2563eb; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 10px; }
+        button:hover { background: #1d4ed8; }
+        .res { background: #eff6ff; padding: 15px; border-radius: 4px; margin-top: 15px; border-left: 4px solid #2563eb; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+        <h1>Stock Mechanics</h1>
+
+        <div class="grid">
+            <div class="card">
+                <h2>Margin & Shorting</h2>
+                <label>Trade Type</label>
+                <select id="trade_type">
+                    <option value="long">Long (Buy on Margin)</option>
+                    <option value="short">Short Sale</option>
+                </select>
+                
+                <label>Initial Price ($)</label>
+                <input type="number" step="0.01" id="p0" placeholder="e.g. 50">
+                
+                <label>Current Price ($)</label>
+                <input type="number" step="0.01" id="p1" placeholder="e.g. 45">
+                
+                <label>Number of Shares</label>
+                <input type="number" id="shares" placeholder="e.g. 100">
+
+                <label>Margin Requirement (Decimal)</label>
+                <input type="number" step="0.01" id="margin_req" placeholder="e.g. 0.30 for 30%">
+                
+                <button onclick="runTradeAnalysis()">Analyze Trade</button>
+                
+                <div id="trade-res" class="res">
+                    <p>Margin Ratio: <strong id="res-margin"></strong></p>
+                    <p>Status: <strong id="res-call"></strong></p>
+                    <p id="res-extra"></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Market Indices</h2>
+                <label>Prices (comma separated)</label>
+                <input type="text" id="idx_prices" placeholder="e.g. 28,70,4">
+                
+                <label>Shares (comma separated)</label>
+                <input type="text" id="idx_shares" placeholder="e.g. 15,12,3">
+                
+                <label>Price-Weighted Divisor</label>
+                <input type="number" step="0.001" id="div_pw" placeholder="e.g. 3">
+                
+                <label>Market-Weighted Divisor</label>
+                <input type="number" step="0.1" id="div_mw" placeholder="e.g. 100">
+                
+                <button onclick="runIndexCalc()">Calculate Indices</button>
+                
+                <div id="idx-res" class="res">
+                    <p>Price-Weighted Index: <strong id="res-pw"></strong></p>
+                    <p>Market-Weighted Index: <strong id="res-mw"></strong></p>
+                    <p>Total Market Cap: <strong id="res-mc"></strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/unit4.js"></script>
+    <script>
+        function runTradeAnalysis() {
+            const type = document.getElementById('trade_type').value;
+            const p0 = parseFloat(document.getElementById('p0').value);
+            const p1 = parseFloat(document.getElementById('p1').value);
+            const shares = parseInt(document.getElementById('shares').value);
+            const req = parseFloat(document.getElementById('margin_req').value) || 0.30;
+
+            let res;
+            if (type === 'long') {
+                res = Unit4.calculateMarginLong(p0, p1, shares, req);
+            } else {
+                res = Unit4.calculateShortSale(p0, p1, shares, req);
+            }
+
+            const resBox = document.getElementById('trade-res');
+            resBox.style.display = 'block';
+            
+            document.getElementById('res-margin').innerText = (res.currentMarginRatio * 100).toFixed(2) + "%";
+            
+            const statusEl = document.getElementById('res-call');
+            if(res.isMarginCall) {
+                statusEl.innerText = "MARGIN CALL TRIGGERED";
+                statusEl.style.color = "red";
+            } else {
+                statusEl.innerText = "Healthy Position";
+                statusEl.style.color = "green";
+            }
+        }
+
+        function runIndexCalc() {
+            const prices = document.getElementById('idx_prices').value.split(',').map(Number);
+            const shares = document.getElementById('idx_shares').value.split(',').map(Number);
+            const divPw = parseFloat(document.getElementById('div_pw').value);
+            const divMw = parseFloat(document.getElementById('div_mw').value);
+
+            const res = Unit4.calculateIndices(prices, shares, divPw, divMw);
+
+            document.getElementById('idx-res').style.display = 'block';
+            document.getElementById('res-pw').innerText = res.pwIndex.toFixed(2);
+            document.getElementById('res-mw').innerText = res.mwIndex.toFixed(2);
+            document.getElementById('res-mc').innerText = "$" + res.totalMc.toLocaleString();
+        }
+    </script>
+</body>
+</html>

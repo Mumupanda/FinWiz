@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Learning Suite - Dashboard</title>
+    <style>
+        :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 40px; }
+        .header { text-align: center; margin-bottom: 50px; }
+        .header h1 { color: var(--primary); font-size: 2.5em; margin-bottom: 10px; }
+        .header p { color: #666; font-size: 1.1em; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: auto; }
+        .card { background: white; padding: 30px; border-radius: 15px; text-decoration: none; color: var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; border: 1px solid #eee; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 12px 20px rgba(0,0,0,0.1); border-color: var(--accent); }
+        .card h2 { margin: 0; color: var(--accent); font-size: 1.5em; }
+        .card p { color: #555; line-height: 1.5; margin: 15px 0; flex-grow: 1; }
+        .card .btn { background: var(--primary); color: white; padding: 10px; text-align: center; border-radius: 5px; font-weight: bold; font-size: 0.9em; }
+        .card:hover .btn { background: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>FinWiz</h1>
+    	<p>Your friendly financial calculating website</p>
+    	<p class="founder-credit">Founded by <strong>Muwon Han</strong> and <strong>Aiden Geng</strong></p>
+    </div>
+
+    <div class="grid">
+        <a href="unit1.html" class="card">
+            <h2>Time Value of Money</h2>
+            <p>Calculate present value and future value of money.</p>
+            <div class="btn">Open Calculator</div>
+        </a>
+        <a href="unit3.html" class="card">
+            <h2>Simple Bonds</h2>
+            <p>Calculate bond valuation, current yield, and determine premium/discount.</p>
+            <div class="btn">Open Calculator</div>
+        </a>
+        <a href="unit4.html" class="card">
+            <h2>Stock Mechanics</h2>
+            <p>Analyze buying on margin, short selling, and index calculations.</p>
+            <div class="btn">Open Tools</div>
+        </a>
+        <a href="unit5.html" class="card">
+            <h2>Financial Ratios</h2>
+            <p>Calculate Profitability, Liquidity, and Leverage Ratios.</p>
+            <div class="btn">Run Analysis</div>
+        </a>
+        <a href="unit6.html" class="card">
+            <h2>Stock Picking</h2>
+            <p>Score stocks using Warren Buffett's Value criteria.</p>
+            <div class="btn">Evaluate Strategy</div>
+        </a>
+        <a href="unit8.html" class="card">
+            <h2>Options</h2>
+            <p>Calculate payoffs and profits for Call/Put Holders and Writers.</p>
+            <div class="btn">Analyze Options</div>
+        </a>
+    </div>
+</body>
+</html>
