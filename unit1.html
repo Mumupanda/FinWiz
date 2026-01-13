@@ -25,7 +25,7 @@
     <h1>Time Value of Money</h1>
     <a href="index.html" class="nav-link">← Back to Dashboard</a>
 
-    <div id="result-box" class="result-container" style="display:none;">
+    <div id="result-box" class="result-container">
         <h3>Calculation Result:</h3>
         <p id="main-result" class="result"></p>
     </div>
@@ -138,19 +138,7 @@
     </div>
 </div>
 
-<script>
-    // Simple helper to show the result box
-    function displayResult(msg) {
-        const container = document.getElementById('result-box');
-        const text = document.getElementById('main-result');
-        container.style.display = 'block';
-        text.innerText = msg;
-        // Scroll to top to see result
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-</script>
 <script src="js/unit1.js"></script>
 
 </body>
-
 </html>
