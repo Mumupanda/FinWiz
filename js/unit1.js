@@ -117,3 +117,4 @@ function displayResult(msg) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
+
